@@ -1,0 +1,36 @@
+' !!!!!! USE ON YOUR OWN RISK !!!!!!
+'==== File Operation =====
+' DESC: Major FSO File Operations
+' VERSION: 20190722 
+' UPDATE BY: DJIA | eniacjia@gmail.com'
+'============================
+Function FileOperation(MyOperation, SourceFile, DestFile)
+  Dim MyFso, MyFile, strTemp
+  
+  On Error Resume Next    
+  Set MyFso = CreateObject("Scripting.FileSystemObject")
+    
+	FileOperation = ""	
+	Select Case UCase(MyOperation)
+        Case "COPY"
+            MyFso.CopyFile SourceFile, DestFile, True '--- True means OverwriteExisting
+        Case "RENAME"
+            MyFso.MoveFile SourceFile, DestFile
+        Case "DELETE"
+            MyFso.DeleteFile SourceFile
+		CASE "INFO"
+			Set MyFile = MyFso.GetFile(SourceFile)
+			strTemp = "  * FILE NAME: " & SourceFile & vbCrLF & _
+			          "  * FILE SIZE: " & MyFile.Size	& vbCrLf & _
+					  "  * UPDATE TIME:"  & MyFile.DateLastModified
+			FileOperation= strTemp
+        Case Else
+            FileOperation = "UNKNOWN OPERATOIN: " & MyOperation
+    End Select
+    '-- If any error --------
+    If Err.Number <> 0 Then
+        FileOperation = Err.Description
+    End If    
+	
+    Set MyFso = Nothing
+End Function
