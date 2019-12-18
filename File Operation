@@ -1,36 +1,40 @@
 ' !!!!!! USE ON YOUR OWN RISK !!!!!!
-'==== File Operation =====
+'======= File Operation ===========
 ' DESC: Major FSO File Operations
-' VERSION: 20190722 
-' UPDATE BY: DJIA | eniacjia@gmail.com'
-'============================
+' UPDATE BY: DJIA | eniacjia@gmail.com
+' VERSION# [20191202] 
+'==================================
+
 Function FileOperation(MyOperation, SourceFile, DestFile)
-  Dim MyFso, MyFile, strTemp
-  
-  On Error Resume Next    
-  Set MyFso = CreateObject("Scripting.FileSystemObject")
-    
-	FileOperation = ""	
-	Select Case UCase(MyOperation)
+    Dim MyFso
+    On Error Resume Next
+    Set MyFso = CreateObject("Scripting.FileSystemObject")
+    Select Case UCase(MyOperation)
         Case "COPY"
             MyFso.CopyFile SourceFile, DestFile, True '--- True means OverwriteExisting
+        Case "MOVE"
+            MyFso.CopyFile SourceFile, DestFile, True '--- True means OverwriteExisting
+            MyFso.DeleteFile SourceFile
         Case "RENAME"
             MyFso.MoveFile SourceFile, DestFile
         Case "DELETE"
             MyFso.DeleteFile SourceFile
-		CASE "INFO"
-			Set MyFile = MyFso.GetFile(SourceFile)
-			strTemp = "  * FILE NAME: " & SourceFile & vbCrLF & _
-			          "  * FILE SIZE: " & MyFile.Size	& vbCrLf & _
-					  "  * UPDATE TIME:"  & MyFile.DateLastModified
-			FileOperation= strTemp
+        Case "LIST"
+            Dim MyFile, MyFolder, MyList
+            Set MyFolder = MyFso.GetFolder(SourceFile)
+            MyList = ""
+            For Each MyFile In MyFolder.Files
+                If InStr(UCase(MyFile.Name), UCase(DestFile)) > 0 Then
+                    MyList = MyList & "  > " & MyFile.Name & "  (" & MyFile.Size & " | " & MyFile.DateCreated & ")" & vbCrLf
+                End If
+            Next
+            FileOperation = MyList
         Case Else
             FileOperation = "UNKNOWN OPERATOIN: " & MyOperation
     End Select
     '-- If any error --------
     If Err.Number <> 0 Then
         FileOperation = Err.Description
-    End If    
-	
+    End If
     Set MyFso = Nothing
 End Function
