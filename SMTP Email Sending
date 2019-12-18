@@ -1,0 +1,21 @@
+
+'=== Send SMTP Email [2019-12-10] ===============================
+Sub SendEmail(EmailFrom, EmailTo, EmailCC, Subject, EmailBody, SmtpServer, FileAttachment, FileAttachment2)
+    On Error Resume Next
+    Dim MyEmail
+    Set MyEmail = CreateObject("CDO.Message")
+    MyEmail.From = EmailFrom
+    MyEmail.To = EmailTo
+    MyEmail.Cc = EmailCC
+    MyEmail.Subject = Subject
+    MyEmail.Textbody = EmailBody
+    MyEmail.AddAttachment FileAttachment
+	If FileAttachment2<>"" then
+		MyEmail.AddAttachment FileAttachment2
+	End If
+    MyEmail.Configuration.Fields.Item("http://schemas.microsoft.com/cdo/configuration/sendusing") = 2
+    MyEmail.Configuration.Fields.Item("http://schemas.microsoft.com/cdo/configuration/smtpserver") = SmtpServer
+    MyEmail.Configuration.Fields.Update
+    MyEmail.Send
+    Set MyEmail = Nothing
+End Sub
