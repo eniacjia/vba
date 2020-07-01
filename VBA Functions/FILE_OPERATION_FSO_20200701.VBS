@@ -1,10 +1,15 @@
-' !!!!!! USE ON YOUR OWN RISK !!!!!!
-'======= File Operation ===========
-' DESC: Major FSO File Operations
-' UPDATE BY: DJIA | eniacjia@gmail.com
-' VERSION# [20191202] 
-'==================================
-
+'!!!!! USE ON YOUR OWN RISK !!!!!
+'======= File Operation ==============================
+' CREATOR: DJIA | eniacjia@gmail.com
+' BUILD VERSION: [2020-07-01]
+' FUNCTION: FSO File Operations
+' PARAMETER LIST:
+'   MyOperation: "COPY", "MOVE", "RENAME", "DELETE", "LIST"
+'   SourceFile: Source Path
+'   DestFile:  Dest Path
+' UPDATE LOG ------------------------------------------ 
+'  [2020-07-01] DJ: Update the descriptions
+'======================================================
 Function FileOperation(MyOperation, SourceFile, DestFile)
     Dim MyFso
     On Error Resume Next

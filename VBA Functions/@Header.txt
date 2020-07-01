@@ -1,0 +1,17 @@
+'!!!!! USE ON YOUR OWN RISK !!!!!
+'=== Send SMTP Email ==================================
+' CREATOR: DJIA | eniacjia@gmail.com
+' BUILD VERSION: [2020-07-01]
+' FUNCTION:  Send SMTP Email with  up to 2 attachments
+' PARAMETER LIST -------------------------------------
+'   EmailFrom :  Email sent from
+'   EmailTo:  Email to, email1;email2 format 
+'   EmailCC: Email CC: Email to, email1;email2 format
+'   Subject: Subject of the email
+'   EmailBody:  Content of the email
+'   SmtpServer:  SMTP Server IP or host name
+'   FileAttachment:  empty or path of the file
+'   FileAttachment2: empty or path of the file
+' UPDATE LOG ------------------------------------------ 
+'  [2020-07-01] DJ: Update the descriptions
+'======================================================
